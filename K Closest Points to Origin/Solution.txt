@@ -1,0 +1,40 @@
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+        //trying brute force method
+        // convert points to distance array
+        int[][] distance = new int[points.length][1];
+        int[][] result = new int[k][2];
+        for(int i=0;i<points.length;i++){
+            distance[i][0]+= Math.pow(points[i][0],2) + Math.pow(points[i][1],2);
+        }
+        //sort distance array
+        for(int i=1;i<distance.length;i++){
+           int j=i,temp;
+            while(j>0 && distance[j-1][0] > distance[j][0]){
+                // swap distance
+                temp=distance[j-1][0];
+                distance[j-1][0]=distance[j][0];
+                distance[j][0]=temp;
+                
+                //swap points
+                temp=points[j-1][0];
+                points[j-1][0]=points[j][0];
+                points[j][0]=temp;
+                
+                temp=points[j-1][1];
+                points[j-1][1]=points[j][1];
+                points[j][1]=temp;
+                
+                j--;
+            }
+        }
+        
+        //
+        for(int i=0;i<k;i++){
+            result[i][0]=points[i][0];
+            result[i][1]=points[i][1];
+        }
+        
+        return result;
+    }
+}
